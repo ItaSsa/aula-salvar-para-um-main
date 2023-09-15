@@ -5,6 +5,8 @@ import org.springframework.stereotype.Service;
 
 import com.devsuperior.aula.dto.DepartmentDto;
 import com.devsuperior.aula.dto.PersonDepartmentDto;
+import com.devsuperior.aula.dto.PersonDto;
+import com.devsuperior.aula.dto.PersonOnlyDto;
 import com.devsuperior.aula.entities.Department;
 import com.devsuperior.aula.entities.Person;
 import com.devsuperior.aula.repositories.DepartmentRepository;
@@ -19,7 +21,7 @@ public class PersonService {
 		@Autowired
 		private DepartmentRepository departmentRepository;
 		
-		public PersonDepartmentDto insert (PersonDepartmentDto dto) {
+		public PersonOnlyDto insert (PersonDepartmentDto dto) {
 			Person person =  new Person();
 			person.setName(dto.getName());
 			person.setSalary(dto.getSalary());
@@ -33,9 +35,24 @@ public class PersonService {
 			
 			person = repository.save(person);
 			
-			return new PersonDepartmentDto(person.getId(), person.getName(), person.getSalary()
-											, new DepartmentDto(person.getDepartment()));
+			return new PersonDepartmentDto(person);
 			
 
+		}
+		
+		
+		public PersonOnlyDto insert2 (PersonDto dto) {
+			Person person =  new Person();
+			person.setName(dto.getName());
+			person.setSalary(dto.getSalary());
+			
+			
+			Department dept = new Department();
+			dept.setId(dto.getDepartmentId());
+			person.setDepartment(dept);
+			
+			person = repository.save(person);
+			
+		   return new PersonDto(person);
 		}
 }

@@ -1,30 +1,19 @@
 package com.devsuperior.aula.dto;
 
-public class PersonDepartmentDto {
-	
-	private Long id;
-	private String name;
-	private Double salary;
+import com.devsuperior.aula.entities.Person;
+
+public class PersonDepartmentDto extends PersonOnlyDto {
 	
 	private DepartmentDto  department;
 	
 	public PersonDepartmentDto(Long id, String name, Double salary, DepartmentDto department) {
-		this.id = id;
-		this.name = name;
-		this.salary = salary;
+		super(id, name, salary);
 		this.department = department;
 	}
 
-	public Long getId() {
-		return id;
-	}
-
-	public String getName() {
-		return name;
-	}
-
-	public Double getSalary() {
-		return salary;
+	public PersonDepartmentDto(Person entity) {
+		super(entity.getId(),entity.getName(),entity.getSalary());
+		department = new DepartmentDto(entity.getDepartment());
 	}
 
 	public DepartmentDto getDepartment() {
